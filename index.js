@@ -15,6 +15,14 @@ const chunkSorter = require("./lib/chunksorter.js");
 const fsStatAsync = promisify(fs.stat);
 const fsReadFileAsync = promisify(fs.readFile);
 
+const appDirectory = fs.realpathSync(process.cwd())
+
+function rootPath(relativePath) {
+  return path.resolve(appDirectory, relativePath)
+}
+
+const maraConf = require(rootPath('marauder.config.js'))
+
 class HtmlWebpackPlugin {
   constructor(options) {
     // Default options
@@ -627,15 +635,22 @@ class HtmlWebpackPlugin {
           self.appendHash(chunkFile, compilationHash)
         );
       }
-
+      debugger;
       // Webpack outputs an array for each chunk when using sourcemaps
       // or when one chunk hosts js and css simultaneously
       const js = chunkFiles.find(chunkFile => /.js($|\?)/.test(chunkFile));
       if (js) {
+
         assets.chunks[chunkName].size = chunk.size;
         assets.chunks[chunkName].entry = js;
         assets.chunks[chunkName].hash = chunk.hash;
-        assets.js.push(js);
+        if(maraConf.enableDebugInHtml){
+            assets.chunks[chunkName].entry = js.replace("min","debug");
+            assets.js.push(js.replace("min","debug"));
+        }
+        else{
+          assets.js.push(js);
+        }
       }
 
       // Gather all css files
