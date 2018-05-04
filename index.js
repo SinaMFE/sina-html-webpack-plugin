@@ -644,7 +644,7 @@ class HtmlWebpackPlugin {
         assets.chunks[chunkName].size = chunk.size;
         assets.chunks[chunkName].entry = js;
         assets.chunks[chunkName].hash = chunk.hash;
-        if(maraConf.enableDebugInHtml){
+        if(maraConf.debug){
             assets.chunks[chunkName].entry = js.replace("min","debug");
             assets.js.push(js.replace("min","debug"));
         }
