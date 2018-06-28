@@ -635,7 +635,6 @@ class HtmlWebpackPlugin {
           self.appendHash(chunkFile, compilationHash)
         );
       }
-      debugger;
       // Webpack outputs an array for each chunk when using sourcemaps
       // or when one chunk hosts js and css simultaneously
       const js = chunkFiles.find(chunkFile => /.js($|\?)/.test(chunkFile));
