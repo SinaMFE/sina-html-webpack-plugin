@@ -256,7 +256,7 @@ class HtmlWebpackPlugin {
           compilationResult =>
             typeof compilationResult !== "function"
               ? self.executeTemplate(
-                  ejs.compile(compilationResult),
+                  ejs.compile(compilationResult,{filename:self.options.template&&self.options.template.split("!")[self.options.template.split("!").length-1]}),
                   chunks,
                   assets,
                   compilation
